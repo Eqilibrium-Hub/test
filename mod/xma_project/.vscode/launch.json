@@ -1,0 +1,21 @@
+{
+    // Use IntelliSense para saber los atributos posibles.
+    // Mantenga el puntero para ver las descripciones de los existentes atributos.
+    // Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Odoo 15",
+            "type": "python",
+            "request": "launch",
+            "program": "C:/Program Files (x86)/Odoo/Source/odoo15/odoo-bin",
+            "console": "integratedTerminal",
+            "args": [
+                "-c",
+                "C:/Users/Indatech/venv/odoo15-venv/Lib/site-packages/odoo/config_files/trabajo/xmarts/xma_project.conf",
+                "-u",
+                "xma_project"
+            ]
+        }
+    ]
+}
