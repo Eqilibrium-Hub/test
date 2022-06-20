@@ -1,0 +1,115 @@
+<odoo>
+    <data>
+        <!-- Form view-->
+        <record id="arrears_request_form_view" model="ir.ui.view">
+            <field name="name">arrears.request.form.view</field>
+            <field name="model">arrears.request</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                        <button type="object" name="action_acepted" string="Aceptado" class='oe_highlight' attrs="{'invisible': [('state', '!=', 'Borrador')]}"/>
+                        <button type="object" name="action_rejected" string="Rechazado" class='oe_highlight' attrs="{'invisible': [('state', '!=', 'Borrador')]}"/>
+                        <button type="object" name="action_send" string="Enviar Solicitud" class='oe_highlight' attrs="{'invisible': [('state', '!=', 'Borrador')]}"/>
+                        <button type="object" name="action_send" string="Enviar Resultado" class='oe_highlight' attrs="{'invisible': [('state', '=', 'Borrador')]}"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <span class="o_form_label" attrs="{'invisible': [('id', '=', False)]}">Solicitud No: </span>
+                            <h1 class="flex-fill d-flex flex-row" attrs="{'invisible': [('id', '=', False)]}">
+                                <field name="sequence" class="text-truncate"/>
+                            </h1>
+                        </div>
+                        <group name="main">
+                            <group>
+                                <field name="project_id"/>
+                                <field name="date_request"/>
+                                <field name="applicant"/>
+                                <field name="priority" widget="priority"/>
+                                <field name="arrears_request_type_ids" widget="many2many_tags"/>
+                                <field name="description"/>
+                            </group>
+                            <group>
+                                <field name="impact_analysis"/>
+                                <field name="cost_by_day"/>
+                                <field name="impact_in_days"/>
+                                <field name="impact_economic"/>
+                                <field name="acceptance_date"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="firmas" string="Firmas:">
+                                <group>
+                                    <group>
+                                        <field name="sign_client" widget="signature" attrs="{'required': [('state', '=', 'Aprobado')]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="sign_cons" widget="signature" attrs="{'required': [('state', '=', 'Aprobado')]}"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <!-- Tree view -->
+        <record id="arrears_request_tree_view" model="ir.ui.view">
+            <field name="name">arrears.request.tree.view</field>
+            <field name="model">arrears.request</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sequence"/>
+                    <field name="project_id"/>
+                    <field name="date_request"/>
+                    <field name="applicant"/>
+                    <field name="acceptance_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Search view-->
+        <record id="arrears_request_search" model="ir.ui.view">
+            <field name="name">arrears.request.search</field>
+            <field name="model">arrears.request</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="sequence"/>
+                    <field name="project_id"/>
+                    <field name="date_request"/>
+                    <field name="applicant"/>
+                    <field name="acceptance_date"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="arrears_request_action" model="ir.actions.act_window">
+            <field name="name">Actas de Atraso</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">arrears.request</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+                
+        <menuitem
+                id="menu_arrears_request_odoo"
+                parent="change_management.menu_change_request_odoo"
+                action="arrears_request_action"
+                name="Arrears Request"
+                sequence="1"/>
+
+        <act_window
+                id="action_arrears_management"
+                name="Actas de Atraso"
+                res_model="arrears.request"
+                domain="[('project_id','=',active_id)]"
+                view_mode="tree,form"
+            />
+
+    </data>
+</odoo>

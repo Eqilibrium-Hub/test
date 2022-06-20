@@ -1,0 +1,67 @@
+<odoo>
+    <data>
+        <report
+            id="report_arrears_request"
+            model="arrears.request"
+            string="Acta de Atraso"
+            report_type="qweb-pdf"
+            name="change_management.request_arrears_template"
+            file="change_management.request_arrears_template"
+        />
+
+        <template id="request_arrears_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h3 style="text-align:center;color:#7d9548;"><b>Acta de Atraso</b></h3>
+                            <p style="color:#665082;font-size:large;"><b>Folio: <span t-field="o.sequence" style="color:#000;"></span></b></p>
+                            <p style="color:#830456;font-size:large;"><b>1.- Datos de Solicitud</b></p>
+                            <table class="table-bordered" style="width:100%;margin-bottom:20px;">
+                                <tbody>
+                                    <tr>
+                                        <td style="width:30%;"><p style="margin:10px;"><b>Fecha de Solicitud</b></p></td>
+                                        <td style="width:70%;"><p style="margin:10px;"><span t-field="o.date_request"></span></p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p style="margin:10px;"><b>Solicitante</b></p></td>
+                                        <td><p style="margin:10px;"><span t-field="o.applicant.name"></span></p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p style="margin:10px;"><b>Prioridad (Alta, Media, Baja)</b></p></td>
+                                        <td><p style="margin:10px;"><span t-field="o.priority"></span></p></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p style="color:#830456;font-size:large;"><b>2.- Descripcion de Solicitud</b></p>
+                            <p><span t-field="o.description"></span></p>
+                            <p style="color:#830456;font-size:large;"><b>3.- Análisis y Valoración de Impacto</b></p>
+                            <p><span t-field="o.impact_analysis"></span></p>
+                            <table class="table-bordered" style="width:100%;margin-top:15px;">
+                                <tbody>
+                                    <tr>
+                                        <td style="width:30%;"><p style="margin:10px;"><b>Impacto en Días</b></p></td>
+                                        <td style="width:70%;"><p style="margin:10px;"><b><span t-field="o.impact_in_days"></span></b></p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p style="margin:10px;"><b>Impacto Económico</b></p></td>
+                                        <td><p style="margin:10px;"><b>$ <span t-field="o.impact_economic"></span></b></p></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div t-if="o.sign_client">
+                                <p style="margin-top:35px;">Firma de Aceptación: <img t-att-src="image_data_uri(o.sign_client)"></img></p>
+                                <p >Fecha de Aceptación: <b><span t-if="o.acceptance_date" t-esc="o.acceptance_date"></span></b></p>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <p style="margin-top:35px;">Proyecto: <b><span t-field="o.project_id.name"></span></b></p>
+                            <p>Entregable: <b>PM-005 Informe de atraso</b></p>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
+

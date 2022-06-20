@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+  <template id="Change_management" inherit_id="website.assets_frontend" name="Website Change Request frontend assets">
+    <xpath expr="." position="inside">
+        <script type="text/javascript" src="/change_management/static/src/js/change_management.js"></script>
+    </xpath>
+  </template>
+
+    <template id="view_change_request_web" name="Change Request">
+        <t t-call="website.layout">
+            <div class="container pb-4">
+                <div class="card ml-2">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="alert alert-success alert-dismissable" t-if="message==1">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&amp;times;</button>
+                            Your message has been successfully sent!
+                        </div>
+                        <div class="alert alert-warning alert-dismissable" t-if="message==2">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&amp;times;</button>
+                            This quotation has been rejected. <a href="#discussion">Contact us</a> if you want a new one.
+                        </div>
+                        <div class="alert alert-warning alert-dismissable" t-if="message==3">
+                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&amp;times;</button>
+                          This order has been validated. Thanks for your trust
+                          and do not hesitate to <a href="#discussion">contact us</a> for
+                          any question.
+                      </div>
+
+                            <!--NOMBRE DEL PROYECTO-->
+                            <div class="col-12 my-5">
+                                <h1 class="h1 d-inline"> Project name: </h1> <span class="h2 d-inline" t-esc="request_id.project_id.name"/>
+                            </div>
+
+                            <!--DECRIPCION-->
+
+                            <div class="col-6 mb-2">
+                                <h2> Description </h2>
+                                <span t-esc="request_id.description"/>
+                            </div>
+
+                            <!--IMPACTO-->
+
+                            <div class="col-6">
+
+                                <div class="row mb-2">
+                                    <div class="col-12">
+                                        <h2>Impact Analysis</h2>
+                                        <span t-esc="request_id.impact_analysis"/>
+                                    </div>
+
+                                    <div class="d-flex col-12 flex-row justify-content-between mt-2">
+
+                                        <div>
+                                            <h4 class="d-inline mr-2 ">Days</h4> <span t-esc="request_id.impact_in_days"/>
+                                        </div>
+                                        <div>
+                                            <h4 class="d-inline mr-2 ">Economic</h4> <span t-esc="request_id.impact_economic"/>
+                                        </div>
+                                        <div>
+                                            <h4 class="d-inline mr-2 ">Cost by Day</h4> <span t-esc="request_id.cost_by_day"/>
+                                        </div>
+
+                                    </div> 
+
+                                </div>
+                                
+                            </div>
+                                    
+                            <!--MISCELANEOS-->
+                            
+                            <div class="d-flex col-12 flex-row justify-content-center my-4">
+                                    <div class="mx-3">
+                                        <h4 class="d-inline mr-2 "> Sequence </h4> <span t-esc="request_id.sequence"/>
+                                    </div>
+                                    <div class="mx-3">
+                                        <h4 class="d-inline mr-2 "> Date Request </h4> <span t-esc="request_id.date_request"/>
+                                    </div>
+                                    <div class="mx-3">
+                                        <h4 class="d-inline mr-2 "> Applicant </h4> <span t-esc="request_id.applicant.name"/>
+                                    </div>
+                                    <div class="mx-3">
+                                        <h4 class="d-inline mr-2 "> Priority </h4> <span t-esc="request_id.priority"/>
+                                    </div>
+                            </div>               
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="text-center hidden-print mt16 mb16" id="quotation_toolbar" t-if="request_id.state == 'Enviado'">
+                            <a class="btn btn-success" data-toggle="modal" data-target="#modalaccept">
+                                <i class="fa fa-check"></i> Accept
+                            </a>
+                            <a class="btn btn-danger" data-toggle="modal" data-target="#modaldecline">
+                                <i class="fa fa-times"></i> Reject
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="modalaccept" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form id="accept" method="POST" t-att-data-order-id="request_id.id" t-att-data-token="request_id.access_token" class="js_accept_json modal-content js_website_submit_form">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
+                              <h4 class="modal-title">Validate Order</h4>
+                            </div>
+                            <div class="modal-body" id="sign-dialog">
+                              <p>
+                                  <span>I agree that by signing this proposal, I
+                                  accept it on the behalf of </span>.
+                              </p>
+                              <div id="signer" class="form-group">
+                                  <label class="control-label" for="name">Your Name:</label>
+                                  <input type="text" name="signer" id="name" class="form-control"/>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div>
+                                  <button type="submit" t-attf-class="btn btn-primary">Sign &amp; Confirm</button> or
+                                  <button type="button" class="btn btn-link" data-dismiss="modal" style="padding: 0">Cancel</button>
+                                </div>
+                            </div>
+                          </form>
+                    </div>
+                </div>
+                <div class="modal fade" id="modaldecline" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form id="decline" method="POST" t-attf-action="/changes/#{request_id.id}/#{request_id.access_token}/decline" class="modal-content">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
+                            <h4 class="modal-title">Reject This Quote</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                Tell us why you are refusing this quotation, this will help us improve our services.
+                            </p>
+                            <textarea rows="4" name="decline_message" placeholder="Your feedback....." class="form-control"/>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" t-att-id="request_id.id" class="btn btn-primary">Reject</button> or
+                            <button type="button" class="btn btn-link" data-dismiss="modal" style="padding: 0">Cancel</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <data>
+      <record id="change_request_template" model="mail.template">
+          <field name="name">Change Request</field>
+          <field name="model_id" ref="change_management.model_change_request"/>
+          <!--field name="email_from">${}</field-->
+          <field name="email_to">${object.applicant.email}</field>
+          <field name="subject">Solicitud de Cambio ${object.sequence}</field>
+          <field name="lang">${object.lang}</field>
+          <field name="auto_delete" eval="True"/>
+          <field name="report_template" ref="change_management.report_change_request"/>
+          <field name="report_name">PM-005 Solicitud de Cambio</field>
+          <field name="body_html" type="html">
+              <div style="paddind:0px; margin:0px;">
+                  <p style="paddind:0px; margin:0px; font-size:15px;">
+                      Folio: ${object.sequence}
+                      <br />
+                      Proyecto: ${object.project_id.name}
+                      <br />
+                      Fecha de solicitud: ${object.date_request}
+                      <br />
+                      Solicitante: ${object.applicant.name}
+                      <br />
+                      Impacto en días: ${object.impact_in_days}
+                      <br />
+                      Impacto económico: ${object.impact_economic}
+                      <br />
+                      Estado: ${object.state}
+                  </p>
+              </div>
+          </field>
+      </record>
+
+      <record id="arrears_request_template" model="mail.template">
+          <field name="name">Change Request</field>
+          <field name="model_id" ref="change_management.model_arrears_request"/>
+          <!--field name="email_from">${}</field-->
+          <field name="email_to">${object.applicant.email}</field>
+          <field name="subject">Informe de Atraso ${object.sequence}</field>
+          <field name="lang">${object.lang}</field>
+          <field name="auto_delete" eval="True"/>
+          <field name="report_template" ref="change_management.report_arrears_request"/>
+          <field name="report_name">PM-005 Informe de Atraso</field>
+          <field name="body_html" type="html">
+              <div style="paddind:0px; margin:0px;">
+                  <p style="paddind:0px; margin:0px; font-size:15px;">
+                      Folio: ${object.sequence}
+                      <br />
+                      Proyecto: ${object.project_id.name}
+                      <br />
+                      Fecha de solicitud: ${object.date_request}
+                      <br />
+                      Solicitante: ${object.applicant.name}
+                      <br />
+                      Impacto en días: ${object.impact_in_days}
+                      <br />
+                      Impacto económico: ${object.impact_economic}
+                      <br />
+                      Estado: ${object.state}
+                  </p>
+              </div>
+          </field>
+      </record>
+
+  </data>
+</odoo>

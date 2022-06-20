@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Form view-->
+    <record id="project_form_inherit" model="ir.ui.view">
+        <field name="name">project.form.inherit</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='description']" position="replace">
+                <page name="description" string="Descripción">
+                    <group>
+                        <group>
+                            <field name="server_id"/>
+                            <field name="xmasubscription_id"/>
+                            <field name="user_number"/>
+                            <field name="odoo_license"/>
+                            <field name="native_modules"/>
+                            <field name="develop_modules"/>
+                            <field name="thirdpart_modules"/>
+                            <field name="metodology"/>
+                        </group>
+                        <group>
+                            <field name="develop_modules"/>
+                            <field name="reports"/>
+                            <field name="companys"/>
+                            <field name="consultan_hours"/>
+                            <field name="develop_hours"/>
+                        </group>
+                        <group>
+                            <field name="observations"/>
+                            <field name="partner_id"/>
+                            <field name="estimated_time"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//page[@name='settings']" position="after">
+                <page name="payment" string="Cobranza">
+                    <group>
+                        <group>
+                            <field name="office"/>
+                            <field name="is_paid_out"/>
+                            <field name="sale_id"/>
+                            <field name="payment_term_id_rel"/>
+                        </group>
+                        <group>
+                            <field name="project_status"/>
+                            <field name="payment_notes"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    
+</odoo>

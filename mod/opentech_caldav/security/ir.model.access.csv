@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_opentech_caldav_opentech_caldav,opentech_caldav.opentech_caldav,model_opentech_caldav_opentech_caldav,base.group_user,1,1,1,1

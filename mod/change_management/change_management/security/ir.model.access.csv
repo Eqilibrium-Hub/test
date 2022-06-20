@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_change_request,change.request,model_change_request,,1,1,1,1
+access_change_request_type,change.request.type,model_change_request_type,,1,1,1,1
+access_arrears_request,arrears.request,model_arrears_request,,1,1,1,1
+access_arrears_request_type,arrears.request.type,model_arrears_request_type,,1,1,1,1

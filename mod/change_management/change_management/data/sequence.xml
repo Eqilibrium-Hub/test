@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <data>
+      <record id="change_request_sequences" model="ir.sequence">
+          <field name="name">Change Request</field>
+          <field name="code">change.request</field>
+          <field name="active">TRUE</field>
+          <field name="prefix">REG</field>
+          <field name="padding">10</field>
+          <field name="number_increment">1</field>
+      </record>
+
+      <record id="arrears_request_sequences" model="ir.sequence">
+          <field name="name">Arrears Request</field>
+          <field name="code">arrears.request</field>
+          <field name="active">TRUE</field>
+          <field name="prefix">REG</field>
+          <field name="padding">10</field>
+          <field name="number_increment">1</field>
+      </record>
+
+  </data>
+</odoo>
