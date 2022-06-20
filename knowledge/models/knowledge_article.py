@@ -1278,10 +1278,10 @@ class Article(models.Model):
 
         Please note that these additional fields are not sanitized, the caller
         has the responsibility to check that user can access those fields and
-        that no injection is possible. """
+        that no injection is possible. 
         self.env['res.partner'].flush_model()
         self.env['knowledge.article'].flush_model()
-        self.env['knowledge.article.member'].flush_model()
+        self.env['knowledge.article.member'].flush_model() """
 
         add_where_clause = ''
         args = []
